@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Armador de PC | BuildWise</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+            <h2 class="logo">
+                <i class="bi bi-cpu-fill"></i>
+                BuildWise
+            </h2>
+
+            <nav>
+                <nav>
+                    <a href="/publico"><i class="bi bi-house"></i> Inicio</a>
+                    <a href="/armador"><i class="bi bi-tools"></i> Armador de PC</a>
+                    <a href="/stock"><i class="bi bi-box-seam"></i> Componentes en stock</a>
+                    <a href="/publico#cotizacion"><i class="bi bi-send"></i> Solicitar cotización</a>
+
+                    <a href="/dashboard" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+
+                    <a href="/componentes" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-cpu"></i> Componentes admin
+                    </a>
+
+                    <a href="/setups" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-pc-display"></i> Setups admin
+                    </a>
+
+                    <a href="/cotizaciones" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-receipt"></i> Cotizaciones
+                    </a>
+
+                    <a href="/categorias" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-tags"></i> Categorías
+                    </a>
+
+                    <a href="/proveedores" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-truck"></i> Proveedores
+                    </a>
+
+                    <a href="/usuarios" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-people"></i> Usuarios
+                    </a>
+
+                    <a href="/solicitudes" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-file-earmark-text"></i> Solicitudes
+                    </a>
+
+                    <a href="/reportes" th:if="${rol == 'ADMIN'}">
+                        <i class="bi bi-bar-chart"></i> Reportes
+                    </a>
+
+                    <a href="/logout">
+                        <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                    </a>
+                </nav>
+        </aside>
+
+        <main class="main">
+
+            <div class="topbar">
+                <div>
+                    <h3>Armador inteligente de PC</h3>
+                    <span>Genera una recomendación según presupuesto y tipo de uso</span>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+
+                <div class="col-md-7">
+
+                    <div class="table-box">
+
+                        <h4 class="mb-3">
+                            <i class="bi bi-magic"></i>
+                            Crear recomendación
+                        </h4>
+
+                        <form th:action="@{/armador/recomendar}" method="post">
+
+                            <div class="mb-3">
+                                <label class="form-label">Presupuesto disponible</label>
+                                <input type="number" name="presupuesto" class="form-control"
+                                    placeholder="Ejemplo: 500000" min="1" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de uso</label>
+
+                                <select name="tipoUso" class="form-select" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="ESTUDIO">Estudio</option>
+                                    <option value="OFICINA">Oficina</option>
+                                    <option value="GAMING">Gaming</option>
+                                    <option value="DISEÑO">Diseño / Edición</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary">
+                                <i class="bi bi-cpu"></i>
+                                Generar recomendación
+                            </button>
+
+                            <hr>
+
+                            <div class="alert alert-info mt-4">
+                                <strong>¿Prefiere elegir las piezas manualmente?</strong>
+                                <br>
+                                Puede armar su propia PC seleccionando cada componente disponible en inventario.
+                            </div>
+
+                            <a href="/armador/manual" class="btn btn-outline-primary">
+                                <i class="bi bi-pc-display-horizontal"></i>
+                                Armar mi PC manualmente
+                            </a>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

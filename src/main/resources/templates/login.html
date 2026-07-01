@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login | BuildWise</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<section class="public-hero">
+
+    <div class="hero-card">
+
+        <div>
+            <h1>BuildWise</h1>
+
+            <p>
+                Armá, compará y cotizá PCs según presupuesto, uso y componentes disponibles.
+            </p>
+
+            <a href="/publico" class="btn btn-outline-light">
+                Ver página pública
+            </a>
+        </div>
+
+        <div class="hero-panel">
+            <div class="text-center mt-3">
+    <a href="/registro" class="text-white">
+        ¿No tienes cuenta? Crear cuenta
+    </a>
+</div>
+<div th:if="${param.registro}" class="alert alert-success">
+    Cuenta creada correctamente. Ahora puedes iniciar sesión.
+</div>
+
+            <h3 class="mb-3">Iniciar sesión</h3>
+
+            <form action="/login" method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Correo</label>
+                    <input type="email" name="correo" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+
+                <p class="text-danger" th:if="${error}" th:text="${error}"></p>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Ingresar
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

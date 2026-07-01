@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Componentes en stock | BuildWise</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo">
+            <i class="bi bi-cpu-fill"></i>
+            BuildWise
+        </h2>
+
+        <nav>
+            <a href="/publico"><i class="bi bi-house"></i> Inicio</a>
+            <a href="/armador"><i class="bi bi-tools"></i> Armador de PC</a>
+            <a href="/stock"><i class="bi bi-box-seam"></i> Componentes en stock</a>
+            <a href="/publico#cotizacion"><i class="bi bi-send"></i> Solicitar cotización</a>
+
+            <a href="/dashboard" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+
+            <a href="/logout">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h3>Componentes en stock</h3>
+                <span>Componentes disponibles para armar una PC personalizada</span>
+            </div>
+        </div>
+
+        <div class="table-box">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="componente : ${componentes}">
+                        <td th:text="${componente.nombre}"></td>
+
+                        <td th:text="${componente.categoria != null ? componente.categoria.nombre : 'Sin categoría'}"></td>
+
+                        <td th:text="${componente.marca}"></td>
+
+                        <td th:text="${componente.modelo}"></td>
+
+                        <td th:text="'₡' + ${componente.precio}"></td>
+
+                        <td>
+                            <span th:if="${componente.stock > 5}" class="badge bg-success" th:text="${componente.stock}"></span>
+                            <span th:if="${componente.stock <= 5}" class="badge bg-warning text-dark" th:text="${componente.stock}"></span>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(componentes)}">
+                        <td colspan="6" class="text-center text-muted">
+                            No hay componentes disponibles actualmente.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Setup | BuildWise</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo">
+            <i class="bi bi-cpu-fill"></i>
+            BuildWise
+        </h2>
+
+        <nav>
+            <a href="/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a href="/componentes"><i class="bi bi-cpu"></i> Componentes</a>
+            <a href="/setups"><i class="bi bi-pc-display"></i> Setups</a>
+            <a href="/armador"><i class="bi bi-tools"></i> Armador de PC</a>
+            <a href="/cotizaciones"><i class="bi bi-receipt"></i> Cotizaciones</a>
+            <a href="/categorias"><i class="bi bi-tags"></i> Categorías</a>
+            <a href="/proveedores"><i class="bi bi-truck"></i> Proveedores</a>
+            <a href="/usuarios"><i class="bi bi-people"></i> Usuarios</a>
+            <a href="/solicitudes"><i class="bi bi-file-earmark-text"></i> Solicitudes</a>
+            <a href="/reportes"><i class="bi bi-bar-chart"></i> Reportes</a>
+            <a href="/logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h3>Nuevo setup</h3>
+                <span>Crear una configuración recomendada de PC</span>
+            </div>
+
+            <a href="/setups" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i>
+                Volver
+            </a>
+        </div>
+
+        <div class="table-box">
+
+            <form th:action="@{/setups/guardar}" method="post" th:object="${setup}">
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre del setup</label>
+                    <input type="text"
+                           class="form-control"
+                           th:field="*{nombre}"
+                           placeholder="Ejemplo: PC Gaming Starter"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Tipo de uso</label>
+
+                    <select class="form-select" th:field="*{tipoUso}" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="ESTUDIO">Estudio</option>
+                        <option value="OFICINA">Oficina</option>
+                        <option value="GAMING">Gaming</option>
+                        <option value="DISEÑO">Diseño / Edición</option>
+                        <option value="GAMA ALTA">Gama alta</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Presupuesto estimado</label>
+                    <input type="number"
+                           step="0.01"
+                           min="0"
+                           class="form-control"
+                           th:field="*{presupuesto}"
+                           placeholder="Ejemplo: 500000"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descripción / recomendación</label>
+                    <textarea class="form-control"
+                              rows="5"
+                              th:field="*{descripcion}"
+                              placeholder="Ejemplo: Setup pensado para gaming en 1080p con buen rendimiento y presupuesto balanceado."
+                              required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i>
+                    Guardar setup
+                </button>
+
+                <a href="/setups" class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

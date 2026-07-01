@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Categoría | BuildWise</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo"><i class="bi bi-cpu-fill"></i> BuildWise</h2>
+
+        <nav>
+            <a href="/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a href="/componentes"><i class="bi bi-cpu"></i> Componentes</a>
+            <a href="/categorias"><i class="bi bi-tags"></i> Categorías</a>
+            <a href="/proveedores"><i class="bi bi-truck"></i> Proveedores</a>
+            <a href="/usuarios"><i class="bi bi-people"></i> Usuarios</a>
+            <a href="/solicitudes"><i class="bi bi-file-earmark-text"></i> Solicitudes</a>
+            <a href="/logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h3>Nueva categoría</h3>
+                <span>Registrar una categoría para clasificar componentes</span>
+            </div>
+        </div>
+
+        <div class="table-box">
+
+            <form action="/categorias/guardar" method="post" th:object="${categoria}">
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-control" th:field="*{descripcion}" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Guardar
+                </button>
+
+                <a href="/categorias" class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Componentes | BuildWise</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo"><i class="bi bi-cpu-fill"></i> BuildWise</h2>
+
+        <nav>
+            <a href="/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a href="/componentes"><i class="bi bi-cpu"></i> Componentes</a>
+            <a href="/categorias"><i class="bi bi-tags"></i> Categorías</a>
+            <a href="/proveedores"><i class="bi bi-truck"></i> Proveedores</a>
+            <a href="/usuarios"><i class="bi bi-people"></i> Usuarios</a>
+            <a href="/solicitudes"><i class="bi bi-file-earmark-text"></i> Solicitudes</a>
+            <a href="/logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h3>Componentes</h3>
+                <span>Inventario general de componentes tecnológicos</span>
+            </div>
+
+            <a href="/componentes/crear" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nuevo componente
+            </a>
+        </div>
+
+        <div class="table-box">
+
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Categoría</th>
+                        <th>Proveedor</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="componente : ${componentes}">
+                        <td th:text="${componente.id}"></td>
+                        <td th:text="${componente.nombre}"></td>
+                        <td th:text="${componente.marca}"></td>
+                        <td th:text="${componente.modelo}"></td>
+                        <td th:text="${componente.categoria != null ? componente.categoria.nombre : 'Sin categoría'}"></td>
+                        <td th:text="${componente.proveedor != null ? componente.proveedor.nombre : 'Sin proveedor'}"></td>
+                        <td th:text="${componente.precio}"></td>
+                        <td th:text="${componente.stock}"></td>
+                        <td>
+                            <span class="badge bg-success" th:text="${componente.estado}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{/componentes/editar/{id}(id=${componente.id})}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <a th:href="@{/componentes/eliminar/{id}(id=${componente.id})}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('¿Seguro que desea eliminar este componente?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

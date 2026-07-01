@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado Armado Manual | BuildWise</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo">
+            <i class="bi bi-cpu-fill"></i>
+            BuildWise
+        </h2>
+
+        <nav>
+            <a href="/publico"><i class="bi bi-house"></i> Inicio</a>
+            <a href="/armador"><i class="bi bi-tools"></i> Armador automático</a>
+            <a href="/armador/manual"><i class="bi bi-pc-display-horizontal"></i> Armar mi PC</a>
+            <a href="/stock"><i class="bi bi-box-seam"></i> Componentes en stock</a>
+            <a href="/publico#cotizacion"><i class="bi bi-send"></i> Solicitar cotización</a>
+
+            <a href="/dashboard" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+
+            <a href="/componentes" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-cpu"></i> Componentes admin
+            </a>
+
+            <a href="/setups" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-pc-display"></i> Setups admin
+            </a>
+
+            <a href="/cotizaciones" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-receipt"></i> Cotizaciones
+            </a>
+
+            <a href="/categorias" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-tags"></i> Categorías
+            </a>
+
+            <a href="/proveedores" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-truck"></i> Proveedores
+            </a>
+
+            <a href="/usuarios" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-people"></i> Usuarios
+            </a>
+
+            <a href="/solicitudes" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-file-earmark-text"></i> Solicitudes
+            </a>
+
+            <a href="/reportes" th:if="${rol == 'ADMIN'}">
+                <i class="bi bi-bar-chart"></i> Reportes
+            </a>
+
+            <a href="/logout">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h3>Resultado de tu PC personalizada</h3>
+                <span>Resumen de componentes seleccionados</span>
+            </div>
+
+            <a href="/armador/manual" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i>
+                Volver
+            </a>
+        </div>
+
+        <div class="row mb-4">
+
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h5>Presupuesto</h5>
+                    <h2 th:text="'₡' + ${presupuesto}">₡0</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h5>Total armado</h5>
+                    <h2 th:text="'₡' + ${total}">₡0</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h5>Diferencia</h5>
+                    <h2 th:text="'₡' + ${diferencia}">₡0</h2>
+                </div>
+            </div>
+
+        </div>
+
+        <div th:if="${dentroPresupuesto}" class="alert alert-success">
+            <strong>La PC está dentro del presupuesto.</strong>
+            <br>
+            Disponible restante:
+            <span th:text="'₡' + ${diferencia}"></span>
+        </div>
+
+        <div th:unless="${dentroPresupuesto}" class="alert alert-danger">
+            <strong>La PC sobrepasa el presupuesto.</strong>
+            <br>
+            Exceso:
+            <span th:text="'₡' + ${diferencia}"></span>
+        </div>
+
+        <div class="table-box">
+
+            <h4>Componentes seleccionados</h4>
+
+            <table class="table table-hover align-middle mt-3">
+
+                <thead>
+                    <tr>
+                        <th>Parte</th>
+                        <th>Componente</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="item : ${seleccion}">
+                        <td>
+                            <strong th:text="${item.key}"></strong>
+                        </td>
+
+                        <td>
+                            <span th:if="${item.value != null}" th:text="${item.value.nombre}"></span>
+                            <span th:if="${item.value == null}" class="text-muted">No seleccionado</span>
+                        </td>
+
+                        <td>
+                            <span th:if="${item.value != null}" th:text="${item.value.marca}"></span>
+                            <span th:if="${item.value == null}">-</span>
+                        </td>
+
+                        <td>
+                            <span th:if="${item.value != null}" th:text="${item.value.modelo}"></span>
+                            <span th:if="${item.value == null}">-</span>
+                        </td>
+
+                        <td>
+                            <span th:if="${item.value != null}" th:text="'₡' + ${item.value.precio}"></span>
+                            <span th:if="${item.value == null}">₡0</span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="table-box mt-4">
+
+            <h4>¿Desea continuar?</h4>
+
+            <p class="text-muted">
+                Puede volver a modificar los componentes o enviar una solicitud para que el administrador revise la configuración.
+            </p>
+
+            <a href="/armador/manual" class="btn btn-primary">
+                <i class="bi bi-pencil-square"></i>
+                Modificar componentes
+            </a>
+
+            <a href="/publico#cotizacion" class="btn btn-success">
+                <i class="bi bi-send"></i>
+                Solicitar cotización
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
