@@ -61,28 +61,6 @@ Model       → Entidades del sistema.
 Templates   → Vistas Thymeleaf.
 Static      → Archivos CSS y recursos estáticos.
 
-
-Configuración local
-
-Archivo de configuración:
-
-src/main/resources/application.properties
-
-Configuración recomendada:
-
-spring.application.name=Buildwise
-
-server.port=${PORT:8080}
-
-spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/buildwise_db}
-spring.datasource.username=${DB_USERNAME:root}
-spring.datasource.password=${DB_PASSWORD:TU_PASSWORD_LOCAL}
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-Requisitos para ejecutar el proyecto
-
 Antes de ejecutar el proyecto se necesita tener instalado:
 
 Java JDK 21 o superior.
@@ -101,11 +79,9 @@ Configurar el archivo application.properties con el usuario y contraseña de MyS
 Ejecutar el proyecto con Maven Wrapper.
 
 En Windows:
-
 .\mvnw.cmd spring-boot:run
 
 En Linux o Mac:
-
 ./mvnw spring-boot:run
 Abrir el sistema en el navegador:
 http://localhost:8080
@@ -117,9 +93,7 @@ Rol: ADMIN
 Usuario normal
 
 El usuario normal puede crearse desde la página de registro:
-
 http://localhost:8080/registro
-
 Los usuarios registrados desde esa página reciben automáticamente el rol USUARIO
 
 Funcionalidades implementadas
@@ -149,9 +123,7 @@ Valor total del inventario.
 Validaciones principales
 
 El sistema utiliza validaciones en formularios HTML y controles en la lógica del sistema para evitar datos inválidos.
-
 Ejemplos:
-
 Campos obligatorios en formularios.
 Presupuesto mayor a cero.
 Precio mayor a cero.
@@ -163,16 +135,13 @@ Estado activo o inactivo para registros administrativos.
 Seguridad y control de acceso
 
 El sistema maneja sesiones para controlar el acceso de los usuarios.
-
 El acceso se divide según el rol:
 
 ADMIN   → Acceso completo al sistema administrativo.
 USUARIO → Acceso limitado a funciones públicas y de armado de PC.
 
 Las rutas administrativas validan que exista una sesión activa y que el usuario tenga rol ADMIN.
-
 Estado actual del proyecto
-
 El sistema se encuentra funcional y permite cumplir con los objetivos principales del proyecto:
 
 Administración de inventario.
